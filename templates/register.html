@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Flask Intro - login page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <h1>Please Register</h1>
+        {% if error %}
+        <p>{{ error }}</p>
+        {% endif %}
+        <br>
+        <form method="POST" action="{{ url_for('register') }}">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <input type="submit" value="Register">
+        </form>
+        <br>
+    </body>
+</html>

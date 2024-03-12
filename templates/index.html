@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <h1>Please Sign In</h1>
+        {% if error %}
+        <p>{{ error }}</p>
+        {% endif %}
+        <br>
+        <form method="POST" action="{{ url_for('index') }}">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <input type="submit" value="Login">
+        </form>
+        <br>
+        <p>Not registered? Click here to <a
+                href="{{ url_for('register') }}">register</a>.</p>
+    </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+    </head>
+    <body>
+        <h1>Welcome, {{ username }}!</h1>
+        <h2>Product List</h2>
+        {% if products %}
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>${{ product.price }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No products available.</p>
+        {% endif %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </body>
+</html>
