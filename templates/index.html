@@ -21,5 +21,15 @@
         <br>
         <p>Not registered? Click here to <a
                 href="{{ url_for('register') }}">register</a>.</p>
+        <br>
+        <h3>Available Endpoints</h2>
+        <ul>
+            <li><a href="{{ url_for('register') }}">Register</a> - Register a
+                new user.</li>
+            <li><a href="{{ url_for('home') }}">Home</a> - View all food and
+                logout, requires login.</li>
+            <li><a href="{{ url_for('database_view') }}">Database</a> - View
+                all users and food.</li>
+        </ul>
     </body>
 </html>

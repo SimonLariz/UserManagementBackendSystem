@@ -1,2 +1,1 @@
-
-        return "No data in database"
+delete_all

@@ -124,6 +124,29 @@ def get_db_data():
     return data
 
 
+def generate_food():
+    # Generate food data
+    conn = get_db()
+    cursor = conn.cursor()
+    for enum, name in enumerate(food_name):
+        cursor.execute(
+            "INSERT INTO food (name, price, rating) VALUES (?, ?, ?)",
+            (name, food_price[enum], food_rating[enum]),
+        )
+    conn.commit()
+    conn.close()
+
+
+def delete_all():
+    # Delete all data from the database
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM users")
+    cursor.execute("DELETE FROM food")
+    conn.commit()
+    conn.close()
+
+
 if __name__ == "__main__":
     init_db()
     print("Database initialized")

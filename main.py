@@ -34,8 +34,6 @@ def register():
             return redirect(url_for("index"))
         else:
             return render_template("register.html", error="Username already exists")
-        return redirect(url_for("index"))
-
     return render_template("register.html")
 
 
@@ -50,6 +48,16 @@ def home():
         return redirect(url_for("index", error="You are not logged in"))
 
 
+# TODO - Add account page, display user details, update password, delete account
+@app.route("/account")
+def account():
+
+    return "Account page"
+
+
+# TODO add food page, display food details, add food, delete food
+
+
 @app.route("/database")
 def database_view():
     # Display the database contents
@@ -60,6 +68,18 @@ def database_view():
     if not data:
         return "No data in database"
     return render_template("database.html", users=usersData, foods=foodData)
+
+
+@app.route("/generate_food", methods=["POST"])
+def init_db():
+    database.generate_food()
+    return redirect(url_for("database_view"))
+
+
+@app.route("/delete_all", methods=["POST"])
+def delete_all():
+    database.delete_all()
+    return redirect(url_for("database_view"))
 
 
 @app.route("/logout")

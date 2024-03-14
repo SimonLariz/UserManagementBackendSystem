@@ -33,13 +33,21 @@
             {% for food in foods %}
             <tr>
                 <td>{{ food.name }}</td>
-                <td>{{ food.price }}</td>
-                <td>${{ food.rating }}</td>
+                <td>${{ food.price }}</td>
+                <td>{{ food.rating }}</td>
             </tr>
             {% endfor %}
         </table>
         {% else %}
-        <p>No products available.</p>
+        <p>No Food available.</p>
         {% endif %}
+        <form action="/generate_food" method="post">
+            <input type="submit" value="Generate Food"
+                onclick="return confirm('Are you want to generate food?')">
+        </form>
+        <form action="/delete_all" method="post">
+            <input type="submit" value="Delete All Data"
+                onclick="return confirm('Are you sure you want to delete all data?')">
+        </form>
     </body>
 </html>
