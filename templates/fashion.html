@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <!-- basic -->
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- mobile metas -->
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+   <!-- site metas -->
+   <title>Food</title>
+   <meta name="keywords" content="">
+   <meta name="description" content="">
+   <meta name="author" content="">
+   <!-- bootstrap css -->
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+   <!-- style css -->
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+   <!-- Responsive-->
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+   <!-- fevicon -->
+   <link rel="icon" href="{{ url_for('static', filename='images/fevicon.png" type="image/gif') }}" />
+   <!-- Scrollbar Custom CSS -->
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.mCustomScrollbar.min.css') }}">
+   <!-- Tweaks for older IEs-->
+   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+   <!-- fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+   <!-- font awesome -->
+   <link rel="stylesheet" type="text/css"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   <!--  -->
+   <!-- owl stylesheets -->
+   <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Poppins:400,700&display=swap&subset=latin-ext"
+      rel="stylesheet">
+   <link rel="stylesheet" href="css/owl.carousel.min.css">
+   <link rel="stylesoeet" href="css/owl.theme.default.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
+      media="screen">
+</head>
+
+<body>
+   <!-- banner bg main start -->
+   <div class="banner_bg_main">
+      <!-- header top section start -->
+      <div class="container">
+         <div class="header_section_top">
+            <div class="row">
+               <div class="col-sm-12">
+                  <div class="custom_menu">
+                     <ul>
+                        <li><a href="#">Welcome, {{ username }} !</li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- header top section start -->
+      <!-- logo section start -->
+      <div class="logo_section">
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-12">
+                 
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- logo section end -->
+      <!-- header section start -->
+      <div class="header_section">
+         <div class="container" style="padding-top: 200px;">
+            <div class="containt_main">
+               <div id="mySidenav" class="sidenav">
+                  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                  <a href="{{ url_for('hometemp') }}">Home</a>
+                  <a href="{{ url_for('my_profile', user=username) }}">My Profile</a>
+                  <a href="{{ url_for('logout') }}">Logout</a>
+               </div>
+               <span class="toggle_icon" onclick="openNav()"><img src="{{ url_for('static', filename='images/toggle-icon.png') }}"></span>
+               <div class="main">
+                  <!-- Another variation with a button -->
+               <form method="GET" action="{{ url_for('hometemp') }}">
+                  <div class="input-group">
+                     <input type="text" id="item" name="item" class="form-control" placeholder="Search">
+                     <div class="input-group-append">
+                        <input class="btn btn-secondary" type="submit" value="Search"
+                           style="background-color: #f26522; border-color:#f26522 "/>
+                     </div>
+                  </div>
+               </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- header section end -->
+      <!-- banner section start -->
+      <div class="banner_section layout_padding">
+         <div class="container">
+            <div id="my_slider" class="carousel slide" data-ride="carousel">
+               <div class="carousel-inner">
+                  <div class="carousel-item active">
+                     <div class="row">
+                        <div class="col-sm-12">
+                           <h1 class="banner_taital" style="
+                           width: 200px;
+                           height: 110px;"><br><br><br></h1>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               </a>
+            </div>
+         </div>
+      </div>
+      <!-- banner section end -->
+   </div>
+   <!-- banner bg main end -->
+   <!-- fashion section start -->
+   <div class="fashion_section">
+      <div id="main_slider" class="carousel slide" data-ride="carousel">
+         <div class="carousel-inner">
+            <div class="carousel-item active">
+               <div class="container">
+                  <h1 class="fashion_taital">Foods List</h1>
+                  <div class="fashion_section_2">
+                     <div class="row">
+                        {% if foods %}
+                           {% for food in foods %}
+                           <div class="col-lg-4 col-sm-4">
+                              <div class="box_main">
+                                 <h4 class="shirt_text">{{ food.name }}</h4>
+                                 <p class="price_text">Price <span style="color: #262626;">{{ food.price }}</span></p>
+
+                                 <div class="tshirt_img"><img src="/static/images/{{ food.name }}.png" alt="/static/images/{{ food.name }}.png" class="fixed-size-image"></div>
+                              </div>
+                           </div>
+                           {% endfor %}
+                        {% else %}
+                        
+                        <div class="col-lg-12 col-sm-12">
+                           <div class="box_main">
+                              <h4 class="shirt_text">No Products found</h4>
+                           </div>
+                        </div>
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="copyright_section">
+      <div class="container">
+         <p class="copyright_text"></a></p>
+      </div>
+   </div>
+   <!-- copyright section end -->
+   <!-- Javascript files-->
+   <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/popper.min') }}"></script>
+   <script src="{{ url_for('static', filename='js/bootstrap.bundle.min') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery-3.0.0.min') }}"></script>
+   <script src="{{ url_for('static', filename='js/plugin') }}"></script>
+   <!-- sidebar -->
+   <script src="C:\Users\LENOVO\Downloads\UserManagementBackendSystem-main\UserManagementBackendSystem-main\static\js\jquery.mCustomScrollbar.concat.min.js"></script>
+   <script src="js/custom.js"></script>
+   <script>
+      function openNav() {
+         document.getElementById("mySidenav").style.width = "250px";
+      }
+
+      function closeNav() {
+         document.getElementById("mySidenav").style.width = "0";
+      }
+   </script>
+</body>
+
+</html>

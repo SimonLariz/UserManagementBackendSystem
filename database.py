@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, g, jsonify
+from flask import Flask, g, jsonify, request
 
 app = Flask(__name__)
 DATABASE = "database.db"
@@ -84,8 +84,27 @@ def add_user(username, password):
 def get_products():
     # Get products from database return jsonify(products)
     conn = get_db()
+    print('in get_products()')
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM food")
+    products = cursor.fetchall()
+    if products:
+        for enum, product in enumerate(products):
+            products[enum] = {
+                "id": product[0],
+                "name": product[1],
+                "price": product[2],
+                "rating": product[3],
+            }
+        return products
+    conn.close()
+    return None
+
+def get_productss(item):
+    # Get specific products from database return jsonify(products)
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM food WHERE name=?", (item,))
     products = cursor.fetchall()
     if products:
         for enum, product in enumerate(products):
@@ -124,6 +143,19 @@ def get_db_data():
     return data
 
 
+def get_user_data():
+    # View the database
+    user=request.args.get('user')
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users where username=?",(user,))
+    users = cursor.fetchall()
+    if users:
+        for enum, user in enumerate(users):
+            users[enum] = {"id": user[0], "username": user[1], "password": user[2]}
+    conn.close()
+    return users
+
 def generate_food():
     # Generate food data
     conn = get_db()
@@ -136,6 +168,19 @@ def generate_food():
     conn.commit()
     conn.close()
 
+def update_profile(id,uname,pwd):
+    conn=get_db()
+    cursor=conn.cursor()
+    cursor.execute("update users set username=?,password=? where id=?",(uname,pwd,id,))
+    conn.commit()
+    conn.close()
+
+def delete_profile(id):
+    conn=get_db()
+    cursor=conn.cursor()
+    cursor.execute("delete from users where id=?",(id,))
+    conn.commit()
+    conn.close()
 
 def delete_all():
     # Delete all data from the database

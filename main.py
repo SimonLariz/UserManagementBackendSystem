@@ -12,16 +12,18 @@ def index():
         # Login submission
         username = request.form["username"]
         password = request.form["password"]
+        print("got req")
         user = database.get_user(username)
+        print("data retrived : " + str(user))
         # Authentication
         if user and user["password"] == password:
             session["username"] = username
             print("Logged in as " + username)
-            return redirect(url_for("home"))
+            return redirect(url_for("hometemp"))
         else:
             return render_template("index.html", error="Invalid username or password")
     return render_template("index.html")
-
+    
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -45,15 +47,47 @@ def home():
         print("FOOD" + str(food))
         return render_template("home.html", username=session["username"], foods=food)
     else:
-        return redirect(url_for("index", error="You are not logged in"))
+        return render_template("index.html", error="You are not logged in")
+    
+@app.route("/hometemp", methods=["GET", "POST"])
+def hometemp():
+    # Check if user is logged in
+    item=request.args.get('item')
+    if "username" in session:
+        if item is not None and item != '':
+            food = database.get_productss(item)
+            print('item is '+item)
+        else:
+            food = database.get_products()
+        print("FOOD" + str(food))
+        return render_template("fashion.html", username=session["username"], foods=food)
+    else:
+        return render_template("index.html", error="You are not logged in")
 
 
 # TODO - Add account page, display user details, update password, delete account
-@app.route("/account")
-def account():
+@app.route("/my_profile")
+def my_profile():
+    if "username" not in session:
+        return render_template("index.html", error="You are not logged in")
+    data = database.get_user_data()
+    print(data)
+    return render_template("my_profile.html",users=data)
 
-    return "Account page"
 
+@app.route("/update_profile")
+def update_profile():
+    if "username" not in session:
+        return render_template("index.html", error="You are not logged in")
+    data = database.update_profile(request.args.get('id'),request.args.get('username'),request.args.get('password'))
+    return redirect(url_for("logout"))
+
+@app.route("/delete_profile")
+def delete_profile():
+    if "username" not in session:
+        return render_template("index.html", error="You are not logged in")
+    data = database.delete_profile(request.args.get('id'))
+    return redirect(url_for("logout"))
 
 # TODO add food page, display food details, add food, delete food
 
@@ -90,4 +124,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,port=8888)

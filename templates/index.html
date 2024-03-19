@@ -2,34 +2,37 @@
 <html>
     <head>
         <title>Login</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     </head>
     <body>
-        <h1>Please Sign In</h1>
-        {% if error %}
-        <p>{{ error }}</p>
-        {% endif %}
-        <br>
-        <form method="POST" action="{{ url_for('index') }}">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+        <div class="container"><br><br><br><br><center><img style="width: 150px;height: 150px;" src="/static/images/login.png">
+            {% if error %}
+            <p>{{ error }}</p>
+            {% endif %}</center></div>
+        <div class="container">
+            <form method="POST" action="{{ url_for('index') }}">
+                <div class="form-group">
+                <label for="username">Username :</label>
+                <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" placeholder="Enter Username" required>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your details with anyone else.</small>
+                </div>
+                <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+                </div>
+                <input type="submit" value="Login" class="btn btn-primary"/>
+            </form>
             <br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <br>
-            <input type="submit" value="Login">
-        </form>
-        <br>
+           <center>
         <p>Not registered? Click here to <a
                 href="{{ url_for('register') }}">register</a>.</p>
         <br>
         <h3>Available Endpoints</h2>
-        <ul>
-            <li><a href="{{ url_for('register') }}">Register</a> - Register a
-                new user.</li>
-            <li><a href="{{ url_for('home') }}">Home</a> - View all food and
-                logout, requires login.</li>
-            <li><a href="{{ url_for('database_view') }}">Database</a> - View
-                all users and food.</li>
-        </ul>
+        
+            <a href="{{ url_for('database_view') }}">Database</a> - View
+                all users and food.<br></center>
+        </div>
+        
+   
     </body>
 </html>
