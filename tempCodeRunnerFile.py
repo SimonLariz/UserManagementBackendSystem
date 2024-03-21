@@ -1,1 +1,1 @@
-delete_all
+return render_template("food.html", food=food)

@@ -1,6 +1,6 @@
 # Flask imports
 from flask import Flask, request, render_template, redirect, url_for, session
-import database
+import database, json
 
 app = Flask(__name__)
 app.secret_key = "SUPER_SECRET_KEY_DO_NOT_SHARE"
@@ -23,7 +23,7 @@ def index():
         else:
             return render_template("index.html", error="Invalid username or password")
     return render_template("index.html")
-    
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -48,15 +48,16 @@ def home():
         return render_template("home.html", username=session["username"], foods=food)
     else:
         return render_template("index.html", error="You are not logged in")
-    
+
+
 @app.route("/hometemp", methods=["GET", "POST"])
 def hometemp():
     # Check if user is logged in
-    item=request.args.get('item')
+    item = request.args.get("item")
     if "username" in session:
-        if item is not None and item != '':
+        if item is not None and item != "":
             food = database.get_productss(item)
-            print('item is '+item)
+            print("item is " + item)
         else:
             food = database.get_products()
         print("FOOD" + str(food))
@@ -72,22 +73,28 @@ def my_profile():
         return render_template("index.html", error="You are not logged in")
     data = database.get_user_data()
     print(data)
-    return render_template("my_profile.html",users=data)
+    return render_template("my_profile.html", users=data)
 
 
 @app.route("/update_profile")
 def update_profile():
     if "username" not in session:
         return render_template("index.html", error="You are not logged in")
-    data = database.update_profile(request.args.get('id'),request.args.get('username'),request.args.get('password'))
+    data = database.update_profile(
+        request.args.get("id"),
+        request.args.get("username"),
+        request.args.get("password"),
+    )
     return redirect(url_for("logout"))
+
 
 @app.route("/delete_profile")
 def delete_profile():
     if "username" not in session:
         return render_template("index.html", error="You are not logged in")
-    data = database.delete_profile(request.args.get('id'))
+    data = database.delete_profile(request.args.get("id"))
     return redirect(url_for("logout"))
+
 
 # TODO add food page, display food details, add food, delete food
 
@@ -102,6 +109,16 @@ def database_view():
     if not data:
         return "No data in database"
     return render_template("database.html", users=usersData, foods=foodData)
+
+
+@app.route("/food/<int:food_id>")
+def food_view(food_id):
+    # Display the food details
+    food_json = database.get_food(food_id)
+    if not food_json:
+        return "Food not found"
+    food_data = json.loads(food_json)
+    return render_template("food.html", food=food_data)
 
 
 @app.route("/generate_food", methods=["POST"])
@@ -124,4 +141,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(debug=True,port=8888)
+    app.run(debug=True, port=8888)
